@@ -1,54 +1,95 @@
 <template>
-  <div class="container">
-      <el-row class="main-container" :gutter="20">
-           <h1 class="title">The Kegged Team.</h1>
-        <!-- Charles Kenny -->
-        <el-col :span="6" :offset="3"> <p class="profile"> <img src="charles-k.jpeg" style="width:120px;height:120px;margin-right:15px;" class="img-circle"> 
-            Lorem Ipsum is simply dummy
-            text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-            when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-        </p> </el-col>
-        <!-- Paul  -->
-        <el-col :span="6"> <p class="profile"> <img src="paul-z.jpeg" style="width:120px;height:120px;margin-right:15px;" class="img-circle"> 
-            Lorem Ipsum is simply dummy
-            text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-            when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-        </p> </el-col>
-        <!-- Emmanuel -->
-        <el-col :span="6"> <p class="profile"> <img src="eman3.jpeg" style="width:120px;height:120px;margin-right:15px;" class="img-circle">
-            Lorem Ipsum is simply dummy
-            text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-            when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-        </p></el-col>
-      </el-row>
+  <div class="about-us-container">
+    <el-row type="flex" justify="center" class="about-header-root">
+      <h1 class="about-us-title">The Kegged Team.</h1>
+    </el-row>
+    <el-row class="about-content-root">
+      <!-- Charles Kenny -->
+      <el-col :xs="24" :sm="12" :md="8" class="profile-card-root">
+        <el-card class="profile-card">
+          <div slot="header" class="card-header">
+            <img src="charles-k.jpeg" class="about-us-image" alt="pic of charles"> 
+          </div>
+          <div class="card-body">
+            <p>Charles is a legendary British leader who, according to medieval histories and 
+              romances, led the defence of Britain against Saxon invaders in the late 5th and early 
+              6th centuries AD. The details of Charles's story are mainly composed of folklore and 
+              literary invention, and his historical existence is debated and disputed by modern 
+              historians.</p> 
+          </div>
+        </el-card>
+      </el-col>
+      <!-- Paul  -->
+      <el-col :xs="24" :sm="12" :md="8" class="profile-card-root">
+        <el-card class="profile-card">
+          <div slot="header" class="card-header"> 
+            <img src="paul-z2.jpeg" class="about-us-image" alt="pic of paul"> 
+          </div>
+          <div class="card-body">
+            <p>Paul is an American silversmith, engraver, early industrialist, and Patriot in the 
+              American Revolution. He is best known for his midnight ride to alert the colonial 
+              militia in April 1775 to the approach of British forces before the battles of Lexington 
+              and Concord, as dramatized in Henry Wadsworth Longfellow's poem, "Paul's Ride".</p>
+          </div> 
+        </el-card>
+      </el-col>
+      <!-- Emmanuel -->
+      <el-col :xs="24" :sm="12" :md="8" class="profile-card-root"> 
+        <el-card class="profile-card">
+          <div slot="header" class="card-header">
+            <img src="eman.jpg" class="about-us-image" alt="pic of eman">
+          </div>
+          <div class="card-body">
+            <p>Emmanuel Jean-Michel Frédéric Macron (born 21 December 1977) is the current President of France and ex officio
+               Co-Prince of Andorra, in office since 14 May 2017.
+               Before entering politics, he was a senior civil servant and investment banker. Macron studied philosophy at Paris Nanterre University, completed a Master's
+               of Public Affairs at Sciences Po, and graduated from the École nationale d'administration (ÉNA) in 2004. He worked at the Inspectorate General of Finances,
+               and later became an investment banker at Rothschild & Cie Banque</p>
+          </div>
+        </el-card>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
 <style>
-.container{
-  text-align: center;
+.about-header-root {
+  margin: 0px 0px 20px 0px !important;
 }
-.title {
-     color: #545c64;
+
+.about-us-title {
+  color: #545c64;
   font-weight: bolder;
-  margin-bottom: 12px;
-}
-.profile{
-    border-radius: 25px;
-    background-color: #ebb563;
-    margin-left:55px;
-    padding-top: 15px;
-    padding-right: 15px;
-    padding-bottom: 20px;
-    padding-left: 15px;
-    width: 250px;
-    border: 1px solid #545c64;
-    color: #545c64;
-}
-.img-circle {
-    border-radius: 50%;
-    float: left;
+  margin: 0px;
 }
 
+.profile-card-root {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.profile-card {
+  width: 80%;
+  background-color: #DCDCDC;
+}
+
+.profile-card .el-card__header {
+  display: flex;
+  justify-content: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-weight: bolder;
+  background-color: #545c64;
+}
+
+.profile-card .el-card__body {
+  background-color: #DCDCDC;
+  padding: 10px;
+}
+
+.about-us-image {
+  max-height: 260px;
+  max-width: 100%;
+}
 </style>
-

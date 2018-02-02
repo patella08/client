@@ -1,6 +1,6 @@
 <template>
   <el-row ref="editor"
-    class="editor-container"
+    class="editor editor-container"
     :gutter="10"
   >
     <el-col ref="editor-inner"
@@ -8,9 +8,9 @@
     >
       <!-- title -->
       <input
-        class="title-input"
+        class="editor-title-input"
         v-model="title"
-        placeholder="Post title*"
+        :placeholder="'*' + titlePlaceholder"
       />
       <!-- tags -->
       <el-tag
@@ -25,7 +25,7 @@
       <!-- tag input -->
       <el-input
         ref="saveTagInput"
-        class="input-new-tag"
+        class="editor-input-new-tag"
         v-if="tagInputVisible"
         v-model="tagInput"
         size="mini"
@@ -33,7 +33,7 @@
         @blur="handleTagSave"
       />
       <el-button v-else
-        class="button-new-tag"
+        class="editor-button-new-tag"
         size="small"
         @click="showTagInput"
       >
@@ -44,14 +44,14 @@
         <el-tab-pane label="Edit">
           <textarea
             class="editor-source"
-            v-model="post"
+            v-model="content"
             @keydown.tab="addIndent"
           />
         </el-tab-pane>
         <el-tab-pane label="Preview">
           <markdown
             class="editor-preview"
-            :source="post"
+            :source="content"
             breaks
             emoji
             typographer
@@ -62,6 +62,7 @@
         type="warning"
         :disabled="readyForSubmission"
         class="editor-save-button"
+        @click="emitSubmit"
       >
         Save post
       </el-button>
@@ -70,16 +71,28 @@
 </template>
 
 <script>
-import markdown from 'vue-markdown'
-
 export default {
+  props: {
+    titlePlaceholder: {
+      type: String,
+      default: 'Post Title',
+    },
+    initialContent: {
+      type: String,
+      default: '# Hello World\n',
+    },
+    initialTitle: {
+      type: String,
+      default: '',
+    },
+    initialTags: [],
+  },
   name: 'App',
-  components: { markdown },
   data() {
     return {
-      title: '',
-      post: '# Hello\n## World\nI **like** H~2~0',
-      tags: ['foo'],
+      title: this.initialTitle,
+      content: this.initialContent,
+      tags: [],
       tagInput: '',
       tagInputVisible: false,
     }
@@ -87,7 +100,7 @@ export default {
   methods: {
     addIndent(e) {
       e.preventDefault()
-      this.post += '\t'
+      this.contet += '\t'
     },
 
     showTagInput() {
@@ -108,12 +121,19 @@ export default {
       }
       this.tagInputVisible = false
       this.tagInput = ''
+    },
+
+    emitSubmit(e) {
+      e.preventDefault()
+
+      const { content, title, tags } = this
+      this.$emit('submit', {content, title, tags})
     }
   },
   computed: {
     readyForSubmission() {
-      const { post, title } = this
-      return !(post.length && title.length)
+      const { content, title } = this
+      return !(content.length && title.length)
     }
   },
 }
@@ -147,7 +167,7 @@ export default {
   border: 1px solid #545c64;
 }
 
-.title-input {
+.editor-title-input {
   font-family: 'Courier', sans-serif;
   font-weight: bold;
   background: transparent;
@@ -158,15 +178,10 @@ export default {
   font-size: 1.5em;
   padding: 10px -10px;
   margin-bottom: 10px;
-  width: 50%;
-  min-width: 400px;
+  width: 100%;
 }
 
-.el-tag {
-  margin-right: 5px;
-}
-
-.button-new-tag {
+.editor-button-new-tag {
   height: 32px;
   line-height: 30px;
   padding-top: 0;
@@ -175,34 +190,44 @@ export default {
   font-weight: bold;
 }
 
-.input-new-tag {
+.editor-input-new-tag {
   height: 32px;
   margin-bottom: 10px;
   width: 90px;
 }
+</style>
 
-.el-tag, .button-new-tag {
+<style>
+/* globals */
+.editor .el-tag,
+.editor .editor-button-new-tag {
   font-family: 'Courier', sans-serif;
   border: 1px solid #545c64;
 }
 
-.el-tabs--border-card>.el-tabs__header,
-.el-tabs__item.is-active {
+.editor .el-tabs--border-card>.el-tabs__header,
+.editor .el-tabs__item.is-active {
   color: #f18e1c !important;
 }
 
-.el-tabs--border-card>.el-tabs__header,
-.el-tabs__item {
+.editor .el-tabs--border-card>.el-tabs__header,
+.editor .el-tabs__item {
   color: #ebb563 !important;
 }
 
-.el-tabs__nav-scroll {
+.editor .el-tabs__nav-scroll {
   background: #545c64 !important;
 }
 
 /* tag text */
-span.el-tag, i.el-tag__close.el-icon-close {
+.editor span.el-tag,
+.editor i.el-tag__close.el-icon-close {
   color: #f8f8ff;
   font-weight: bold;
 }
+
+.editor .el-tag {
+  margin-right: 5px;
+}
 </style>
+

@@ -1,16 +1,29 @@
 <template>
-  <!-- intro button component with props -->
+  <!-- button component with props -->
   <el-button  
     round
     type="warning"
-    class="intro-button">{{ text }}
+    class="intro-button"
+    @click="emitClick"
+    :disabled="disabled"
+  >
+    {{ text }}
   </el-button>
 </template>
 
 <script>
 export default {
   // define props, text, expect a string
-  props: { text: String }
+  props: {
+    text: String,
+    disabled: {
+      type: Boolean,
+      default: false,
+    }
+  },
+  methods: {
+    emitClick() { this.$emit('click') }
+  }
 }
 </script>
 
